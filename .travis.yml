@@ -11,7 +11,7 @@ deploy:
 services: postgresql
 
 script:
- - rake db:migrate RAILS_ENV=test
+ - bundle exec rake db:migrate RAILS_ENV=test
 
 before_script:
 # - psql -c "create user fabien with password 'pgsql';" -U postgres
