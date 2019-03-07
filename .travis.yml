@@ -11,5 +11,6 @@ deploy:
 services: postgresql
 
 before_script:
+# - psql -c "create user fabien with password 'pgsql';" -U postgres
  - psql -c 'create database travis_ci_test' -U postgres
  - cp config/database.yml.travis config/database.yml
