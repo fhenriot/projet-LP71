@@ -10,6 +10,9 @@ deploy:
 
 services: postgresql
 
+script:
+ - bin/rails db:migrate RAILS_ENV=test
+
 before_script:
 # - psql -c "create user fabien with password 'pgsql';" -U postgres
  - psql -c 'create database travis_ci_test' -U postgres
