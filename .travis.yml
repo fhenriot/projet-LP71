@@ -1,21 +1,21 @@
 language: ruby
 rvm:
- - 2.5.3
+- 2.5.3
+services: postgresql
+script:
+- bundle exec rake db:migrate RAILS_ENV=test
+- bundle exec rake db:test:prepare
+- bundle exec rake
+before_script:
+- psql -c 'create database travis_ci_test' -U postgres
+- cp config/database.yml.travis config/database.yml
 
 deploy:
   provider: heroku
-  app: lp71-project-henriot
   api_key:
-    secure: 6a9b2d06-8698-408b-a443-6c4638b4aa83
-
-services: postgresql
-
-script:
- - bundle exec rake db:migrate RAILS_ENV=test
- - bundle exec rake db:test:prepare
- - bundle exec rake
-
-before_script:
-# - psql -c "create user fabien with password 'pgsql';" -U postgres
- - psql -c 'create database travis_ci_test' -U postgres
- - cp config/database.yml.travis config/database.yml
+    secure: jlD0Ks780/ERzT+wRW7cVTJ+hSu2FxsFNJWYMDSnMfQgdhqDmC02LDHnU8+zvvuLyDlhQyOg2PFF8dT1pEYbcwoWgJYrlz4etlnqRiu+sjbV02Lte1oYoNkPDBpQsuoyZTLN6bOY4wP4CL+Y96E126k4QIfBRejxbyXswQFLqNF7d83a82P9LUQcaofBrMG2+u4wP7wEJORnBNacpstfczRAmvJ7wVWGO1LGIz7vejMxJlJQpvqRxj/vxuPN/haAk0vtDjCjMceDbGTmN7FmcFHqM4rRVyy+jvxkINuBqBpGhh201Ff6dJlIbgVPLWOJhxpIEkZyh6BYLlE2LLYCVmWjb2vDiiuLfr0NL/v1zbM1L3y7WiwdrSKSvAm2He572bB6G0a3Oj9IHUiixCZpaPpTJooLfptrbNKa5x7ddnK/FWcPzbrbvYc3MplaSG5eXF8JEmJyL5ctcBBKrZFGWYyzXYEj2g738LKDrbE1f+KNrNTN7leHGNn3EEGIHfqyyZ9n8QFwYRfbkg9s2D960hy8GYoEDhTZPmVkm3R7AwrJJMsFJZEX9PiK3+cW5mIc0q1La1aazpzD/aL22s1Us3NUUY6VHteZZlrDtwMuhd84ga/Nzx+zXS3MB9+CTIxauGxUnhWUcLaQnw/rd1+AZKagv4Bfr88LSUzfRH8KjUc=
+  app: lp71-project-henriot
+  on:
+    repo: fhenriot/projet-LP71
+  run:
+    rake db:migrate
